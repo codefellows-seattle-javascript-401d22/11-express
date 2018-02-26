@@ -1,0 +1,51 @@
+'use strict';
+
+const express = require('express');
+const morgan = require('morgan');
+const createError = require('http-errors');
+const jsonParser = require('body-parser').json();
+const debug = require('debug')('note:server');
+const Note = require('./model/note.js');
+
+const PORT = process.env.PORT || 3000;
+const app = express();
+
+app.use(morgan('dev'));
+
+app.get('/test', function(req,res){
+  debug('GET: /test');
+  res.json({msg:'hello from /test town'});
+});
+
+app.post('/api/note', jsonParser, (req,res, next) => {
+  debug('POST: /api/note');
+  //post note to file system
+  Note.createNote(req.body)
+    .then( note => res.json(note))
+    .catch( err => next(err));
+});
+
+app.get('/api/note/:noteId', (req,res,next) => {
+  debug('GET: /api/note/:noteId');
+  
+  Note.fetchNote(req.params.noteId)
+    .then(note => res.json(note))
+    .catch(err => next(err));
+});
+
+app.use(function(err, req, res, next){
+  debug('error middleware');
+  console.error(err.message);
+
+  if(err.status) {
+    res.status(err.status).send(err.name);
+    return;
+  }
+
+  err = createError(500, err.message);
+  res.status(err.status).send(err.name);
+});
+
+app.listen(PORT, () => {
+  debug('Server listening on', PORT);
+});
