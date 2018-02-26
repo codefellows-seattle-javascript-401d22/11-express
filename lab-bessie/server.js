@@ -4,32 +4,40 @@ const express = require('express');
 const morgan = require('morgan');
 const createError = require('http-errors');
 const jsonParser = require('body-parser').json();
-const debug = require('debug')('notes:server');
-const Note = require('./model/note.js');
+const debug = require('debug')('strains:server');
+const Strain = require('./model/strain.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', function(req, res) {
-  debug('GET: /test');
-  res.json({msg: 'hello from /test'});
-});
-
-app.post('/api/note', jsonParser, function(req, res, next) {
-  debug('POST: /api/note');
-  Note.createNote(req.body)
-    .then(note => res.json(note))
+app.post('/api/strain', jsonParser, function(req, res, next) {
+  debug('POST: /api/strain');
+  Strain.createStrain(req.body)
+    .then(strain => res.json(strain))
     .catch(err => next(err));
 });
 
-app.get('/api/note/:noteId', function(req, res, next) {
-  debug('GET: /api/note/:noteId');
+app.get('/api/strain/:strainId', function(req, res, next) {
+  debug('GET: /api/strain/:strainId');
 
-  Note.fetchNote(req.params.noteId)
-    .then(note => res.json(note))
+  Strain.fetchStrain(req.params.strainId)
+    .then(strain => res.json(strain))
     .catch(err => next(err));
+});
+
+app.delete('/api/strain/:strainId', function(req, res, next) {
+  debug('DELETE: /api/strain/:strainId');
+  
+  Strain.deleteStrain(req.params.strainId);
+  res.send('Delete request has been made!');
+  next();
+});
+
+app.use(function (req, res, next) {
+  res.status(404).send('Sorry can\'t find that!');
+  next();
 });
 
 app.use(function(err, req, res, next) {
@@ -43,6 +51,7 @@ app.use(function(err, req, res, next) {
 
   err = createError(500, err.message);
   res.status(err.status).send(err.name);
+  next();
 });
 
 app.listen(PORT, () => {
