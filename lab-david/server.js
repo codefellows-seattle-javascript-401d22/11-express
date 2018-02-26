@@ -4,7 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const createError = require('http-errors');
 const jsonParser = require('body-parser').json();
-const debug = require('debug')('note:server');
+const debug = require('debug')('car:server');
 const Car = require('./model/car.js');
 
 const PORT = process.env.PORT || 3000;
@@ -19,7 +19,7 @@ app.get('/test', function(req,res){
 
 app.post('/api/car', jsonParser, (req,res, next) => {
   debug('POST: /api/car');
-  Car.createNote(req.body)
+  Car.createCar(req.body)
     .then( car => res.json(car))
     .catch( err => next(err));
 });
@@ -44,6 +44,7 @@ app.delete('/api/car/:carId', (req,res,next) => {
   debug('DELETE: /api/car/:carId');
 
   Car.deleteCar(req.params.carId)
+    .then(() => res.status(204).send(`${req.params.carId} deleted`))
     .catch(err => next(err));
 });
 

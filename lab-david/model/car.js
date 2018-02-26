@@ -2,7 +2,7 @@
 
 const uuidv4 = require('uuid/v4');
 const createError = require('http-errors');
-const debug = require('debug')('note:note');
+const debug = require('debug')('car:car');
 const storage = require('../lib/storage.js');
 
 const Car = module.exports = function(make, model, year){
@@ -34,7 +34,7 @@ Car.fetchCar = function(id){
 
 Car.deleteCar = function(id){
   debug('deleteCar');
-  return storage.deleteItem(id);
+  return storage.deleteItem('car', id);
 };
 
 Car.lookupCarIds = function(){
