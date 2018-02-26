@@ -48,18 +48,18 @@ app.delete('/api/car/:carId', (req,res,next) => {
     .catch(err => next(err));
 });
 
-app.use(function(err, req, res, next){
-  debug('error middleware');
-  console.error(err.message);
+// app.use(function(err, req, res, next){
+//   debug('error middleware');
+//   console.error(err.message);
 
-  if(err.status) {
-    res.status(err.status).send(err.name);
-    return;
-  }
+//   if(err.status) {
+//     res.status(err.status).send(err.name);
+//     return;
+//   }
 
-  err = createError(500, err.message);
-  res.status(err.status).send(err.name);
-});
+//   err = createError(500, err.message);
+//   res.status(err.status).send(err.name);
+// });
 
 app.listen(PORT, () => {
   debug('Server listening on', PORT);
