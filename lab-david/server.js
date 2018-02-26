@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const createError = require('http-errors');
 const jsonParser = require('body-parser').json();
 const debug = require('debug')('note:server');
-const Note = require('./model/note.js');
+const Car = require('./model/car.js');
 
 const PORT = process.env.PORT || 3000;
 const app = express();
@@ -17,19 +17,33 @@ app.get('/test', function(req,res){
   res.json({msg:'hello from /test town'});
 });
 
-app.post('/api/note', jsonParser, (req,res, next) => {
-  debug('POST: /api/note');
-  //post note to file system
-  Note.createNote(req.body)
-    .then( note => res.json(note))
+app.post('/api/car', jsonParser, (req,res, next) => {
+  debug('POST: /api/car');
+  Car.createNote(req.body)
+    .then( car => res.json(car))
     .catch( err => next(err));
 });
 
-app.get('/api/note/:noteId', (req,res,next) => {
-  debug('GET: /api/note/:noteId');
+app.get('/api/car/:carId', (req,res,next) => {
+  debug('GET: /api/car/:carId');
   
-  Note.fetchNote(req.params.noteId)
-    .then(note => res.json(note))
+  Car.fetchCar(req.params.carId)
+    .then(car => res.json(car))
+    .catch(err => next(err));
+});
+
+app.get('/api/car', (req,res,next) => {
+  debug('GET: /api/car');
+
+  Car.lookupCarIds()
+    .then( list => res.json(list))
+    .catch(err => next(err));
+});
+
+app.delete('/api/car/:carId', (req,res,next) => {
+  debug('DELETE: /api/car/:carId');
+
+  Car.deleteCar(req.params.carId)
     .catch(err => next(err));
 });
 
