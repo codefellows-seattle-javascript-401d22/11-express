@@ -61,4 +61,15 @@ describe('Cat Routes', () => {
         });
     });
   });
+  describe('Unregistered Routes', function() {
+    it('should return a status code of 404 for routes that have not been registered', function(done) {
+      request.get(`localhost:3000/api/cat/notacat`)
+        .send({ name: 'Freyja', age: 1.5, favoriteToy: 'red ball' })
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          expect(res.text).toEqual('NotFoundError');
+          done();
+        });
+    });
+  });
 });

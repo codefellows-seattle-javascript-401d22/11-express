@@ -33,6 +33,14 @@ app.get('/api/cat/:catId', function(req, res, next) {
     .catch( err => next(err));
 });
 
+app.delete('/api/cat/:catId', function(req, res, next) {
+  debug('DELETE: /api/cat/:catId');
+
+  Cat.deleteCat(req.params.catId)
+    .then( () => res.json({ msg: `Cat id:${req.params.catId} successfully deleted.` }))
+    .catch( err => next(err));
+});
+
 app.use(function(err, req, res, next) {
   debug('Error middleware');
   console.error(err.message);
@@ -42,8 +50,13 @@ app.use(function(err, req, res, next) {
     return;
   }
 
+  if (err.message === 'Not found') {
+    res.status(err.status).send(err.message);
+    return;
+  }
+
   err = createError(500, err.message);
-  res.status(err.status).send(err.name);
+  res.send(err.name);
 });
 
 app.listen(PORT, () => {
