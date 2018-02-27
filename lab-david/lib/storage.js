@@ -29,7 +29,12 @@ exports.fetchItem = function(schemaName, id){
       } catch(err) {
         return Promise.reject(err);
       }
-    }).catch(err => Promise.reject(err));
+    }).catch(err => {
+      if(err.code === 'ENOENT'){
+        err = createError(404, new Error('route not found'));
+      }
+      return Promise.reject(err);
+    });
 };
 
 exports.deleteItem = function(schemaName, id){
@@ -37,7 +42,6 @@ exports.deleteItem = function(schemaName, id){
   if(!id) return Promise.reject(createError(400, new Error('expected id')));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-    .then()
     .catch(err => Promise.reject(err));
 };
 
