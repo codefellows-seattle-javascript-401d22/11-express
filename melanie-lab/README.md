@@ -15,7 +15,7 @@
 * **model/** - contains resource model
   * **cat.js**
 * **data/** - contains data within file system
-  * **kitteh/**
+  * **cat/**
 * **__test__** - contains route tests
   * **cat.test.js**
 * **server.js** - runs the application
