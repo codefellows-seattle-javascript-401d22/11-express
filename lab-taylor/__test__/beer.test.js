@@ -57,31 +57,33 @@ describe('Beer Routes', function() {
         });
     });
   });
-  describe('DELETE: /api/beer', function() {
-    it('should delete a beer', function(done) {
-      request.delete(`localhost:3000/api/beer?id=${beer.id}`)
-        .end((err,res) => {
-          if(err) return done(err);
-          expect(res.status).toEqual(204);
-          done();
-        });
-    });
-    it('should return a 404 status', function(done) {
-      request.delete(`localhost:3000/api/candle?id=1234`)
-        .end((err,res) => {
-          //console.log('result from del 404:', res);
-          expect(res.status).toEqual(404);
-          expect(res.text).toEqual('route not found');
-          done();
-        });
-    });
-    it('should return a 400 status', function(done) {
-      request.delete(`localhost:3000/api/beer?funk=cheah`)
-        .end( (err,res) => {
-          expect(res.status).toEqual(400);
-          expect(res.text).toEqual('bad request');
-          done();
-        });
-    });
-  });
+
+  //#########################DELETE TEST#####################################################
+  // describe('DELETE: /api/beer', function() {
+  //   it('should delete a beer', function(done) {
+  //     request.delete(`localhost:3000/api/beer?id=${beer.id}`)
+  //       .end((err,res) => {
+  //         if(err) return done(err);
+  //         expect(res.status).toEqual(204);
+  //         done();
+  //       });
+  //   });
+  //   it('should return a 404 status', function(done) {
+  //     request.delete(`localhost:3000/api/candle?id=1234`)
+  //       .end((err,res) => {
+  //         //console.log('result from del 404:', res);
+  //         expect(res.status).toEqual(404);
+  //         expect(res.text).toEqual('route not found');
+  //         done();
+  //       });
+  //   });
+  //   it('should return a 400 status', function(done) {
+  //     request.delete(`localhost:3000/api/beer?funk=cheah`)
+  //       .end( (err,res) => {
+  //         expect(res.status).toEqual(400);
+  //         expect(res.text).toEqual('bad request');
+  //         done();
+  //       });
+  //   });
+  // });
 });

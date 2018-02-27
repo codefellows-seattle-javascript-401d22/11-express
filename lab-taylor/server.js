@@ -19,7 +19,7 @@ app.get('/test', function(req,res) {
 
 app.post('/api/beer', jsonParser, function(req, res, next) {
   debug('POST: /api/beer');
-  if(!req.body.name){
+  if(!req.body.name || !req.body.style){
     return next(createError(400, new Error('bad request')));
   }
   Beer.createBeer(req.body)
@@ -30,8 +30,8 @@ app.post('/api/beer', jsonParser, function(req, res, next) {
 
 app.get('/api/beer/:beerId', function(req,res, next) {
   debug('GET: /api/beer/beerId');
-  console.log(!req.params.beerId);
-  if(req.params.beerId){
+  
+  if(!req.params.beerId){
     return next(createError(400, new Error('bad request')));
   }
   Beer.fetchBeer(req.params.beerId)
