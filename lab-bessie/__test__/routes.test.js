@@ -13,7 +13,7 @@ describe('Strain Routers', function() {
           done();
         });
     });
-    it('should give a 404 status', function(done) {
+    it('should give a 400 status', function(done) {
       request.get('localhost:3000/api/strain/')
         .end((err, res) => {
           expect(res.status).toEqual(400);
