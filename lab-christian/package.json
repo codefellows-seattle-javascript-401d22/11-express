@@ -1,0 +1,30 @@
+{
+  "name": "lab-christian",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "body-parser": "^1.18.2",
+    "debug": "^3.1.0",
+    "express": "^4.16.2",
+    "http-errors": "^1.6.2",
+    "morgan": "^1.9.0",
+    "superagent": "^3.8.2",
+    "uuid": "^3.2.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.18.1",
+    "jest": "^22.4.2"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "DEBUG='note*' node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
