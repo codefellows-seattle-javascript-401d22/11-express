@@ -41,7 +41,7 @@ describe('Beer Routes', function() {
         });
     });
     it('should return a 404 status', function(done) {
-      request.get(`localhost:3000/api/beer/1234`)
+      request.get(`localhost:3000/api/bee`)
         .end((err,res) => {
           expect(res.status).toEqual(404);
           

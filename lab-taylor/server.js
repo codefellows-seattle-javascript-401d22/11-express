@@ -46,18 +46,22 @@ app.delete('/api/beer/:beerId', function(req,res,next) {
     .catch( err => next(err));
 });
 
-app.use(function(err,req,res,next) {
+app.use(function(err, req, res, next) {
   debug('error module');
   console.error(err.message);
 
   if(err.status) {
     res.status(err.status).send(err.name);
+    next();
     return;
+
   }
 
   if (err.message === 'Not found') {
     res.status(err.status).send(err.message);
+    next();
     return;
+
   }
 
   err = createError(500, err.message);
