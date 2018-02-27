@@ -142,7 +142,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# Strain Folder
-data/strain
-
 # End of https://www.gitignore.io/api/vim,osx,node,linux,windows
