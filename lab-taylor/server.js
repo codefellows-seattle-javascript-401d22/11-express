@@ -31,7 +31,7 @@ app.post('/api/beer', jsonParser, function(req, res, next) {
 app.get('/api/beer/:beerId', function(req,res, next) {
   debug('GET: /api/beer/beerId');
   console.log(!req.params.beerId);
-  if(!req.params.beerId){
+  if(req.params.beerId){
     return next(createError(400, new Error('bad request')));
   }
   Beer.fetchBeer(req.params.beerId)
