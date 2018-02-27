@@ -33,7 +33,7 @@ exports.fetchItem = function(schemaName, id) {
         return Promise.reject(err);
       }
     })
-    .catch( err => Promise.reject(err) );
+    .catch( err => Promise.reject(createError(404, 'Not found')) );
 };
 
 // exports.deleteItem = (schemaName, id) => {

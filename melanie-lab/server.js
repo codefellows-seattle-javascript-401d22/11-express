@@ -12,11 +12,6 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', function(req, res) {
-  debug('GET: /test');
-  res.json({ msg: 'hello from /test' });
-});
-
 app.post('/api/cat', jsonParser, function(req, res, next) {
   debug('POST: /api/cat');
   Cat.createCat(req.body)
@@ -24,12 +19,18 @@ app.post('/api/cat', jsonParser, function(req, res, next) {
     .catch( err => next(err));
 });
 
+app.get('/api/cat/', function(req, res, next) {
+  debug('GET: /api/cat/');
+
+  throw new createError(400, 'Bad request');
+});
+
 app.get('/api/cat/:catId', function(req, res, next) {
   debug('GET: /api/cat/:catId');
 
   Cat.fetchCat(req.params.catId)
     .then( cat => res.json(cat))
-    .catch(err => next(err));
+    .catch( err => next(err));
 });
 
 app.use(function(err, req, res, next) {
