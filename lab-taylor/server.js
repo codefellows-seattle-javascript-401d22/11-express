@@ -26,14 +26,14 @@ app.post('/api/beer', jsonParser, function(req, res, next) {
     .then( beer => res.json(beer))
     .catch( err => next(err));
 });
+
+app.get('/api/beer', function(req,res,next) {
+  return next(createError(400, new Error('bad request')));
+});
   
 
 app.get('/api/beer/:beerId', function(req,res, next) {
   debug('GET: /api/beer/beerId');
-  
-  if(!req.params.beerId){
-    return next(createError(400, new Error('bad request')));
-  }
   Beer.fetchBeer(req.params.beerId)
     .then( beer => res.json(beer))
     .catch( err => next(err));
@@ -68,4 +68,6 @@ app.use(function(err,req,res,next) {
 app.listen(PORT, () => {
   debug(`Server up at ${PORT}`);
 });
+  
+  
   
