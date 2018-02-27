@@ -19,16 +19,9 @@ app.get('/test', function(req, res) {
 
 app.post('/api/cat', jsonParser, function(req, res, next) {
   debug('POST: /api/cat');
-  console.log(req.body);
   Cat.createCat(req.body)
-    .then( cat => {
-      console.log(cat)
-      res.json(cat)
-    })
-    .catch( err => {
-      console.log('what even',err)
-      next(err)
-    })
+    .then( cat => res.json(cat))
+    .catch( err => next(err));
 });
 
 app.get('/api/cat/:catId', function(req, res, next) {

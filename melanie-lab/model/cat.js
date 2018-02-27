@@ -8,10 +8,10 @@ const storage = require('../lib/storage.js');
 const Cat = module.exports = function(name, age, favoriteToy) {
   debug('Cat constructor');
 
-  if (!name) throw new Error('expected name');
-  if (!age) throw new Error('expected age');
-  if (!favoriteToy) throw new Error('expected favorite toy');
-
+  if (!name) throw new createError(400, 'expected name');
+  if (!age) throw new createError(400, 'expected age');
+  if (!favoriteToy) throw new createError(400, 'expected favorite toy');
+ 
   this.id = uuidv4();
   this.name = name;
   this.age = age;
