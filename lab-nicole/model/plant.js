@@ -8,10 +8,6 @@ const storage = require('../lib/storage.js');
 const Plant = module.exports = function(species, color, flower) {
   debug('Plant constructor');
 
-  if(!species) createError(400, new Error('expected species'));
-  if(!color) createError(400, new Error('expected color'));
-  if(!flower) createError(400, new Error('expected flower'));
-
   this.id = uuidv4();
   this.species = species;
   this.color = color;
@@ -20,6 +16,8 @@ const Plant = module.exports = function(species, color, flower) {
 
 Plant.createItem = function(_plant) {
   debug('createItem');
+  
+  if(_plant.species === undefined || _plant.color === undefined || _plant.flower === undefined) return Promise.reject(createError(400, 'bad request'));
 
   try {
     let plant = new Plant(_plant.species, _plant.color, _plant.flower);
@@ -32,5 +30,11 @@ Plant.createItem = function(_plant) {
 
 Plant.fetchPlant = function(id) {
   debug('fetchPlant');
-  return storage.fetchPlant('plant', id);
+  console.log(id);
+  return storage.fetchItem('plant', id);
+};
+
+Plant.removePlant = function(id) {
+  debug('removePlant');
+  return storage.deleteItem('plant', id);
 };
