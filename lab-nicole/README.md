@@ -11,6 +11,7 @@ Once the server has started up, you should see the message "server up: ${PORT}" 
 ### POST /api/plant/
 
 To make a POST request, in the terminal type:
+
 ```http POST :3000/api/plant species={species} color={color} flower={flower}```
 
 with the flower being a true or false value. 
@@ -31,6 +32,7 @@ with the specific ID for the plant you would like to retrieve. When the plant ha
 ### DELETE /api/plant/id?={id}
 
 To make a DELETE request for a specific plant, in the terminal type:
+
 ``` http :3000/api/plant id={id}``` or ```http:3000/api/plant/id=?{id}```
 
 with the specific ID of the plant you would like to delete. When the plant is deleted, the server will respond with a __204__ status code, meaning the plant has been successfully deleted.
