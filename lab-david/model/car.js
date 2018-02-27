@@ -7,9 +7,9 @@ const storage = require('../lib/storage.js');
 
 const Car = module.exports = function(make, model, year){
   debug('Car constructor');
-  if(!make) createError(400, new Error('expected make'));
-  if(!model) createError(400, new Error('expected model'));
-  if(!year) createError(400, new Error('expected year'));
+  if(!make) throw createError(400, new Error('bad request: expected make'));
+  if(!model) throw createError(400, new Error('bad request: expected model'));
+  if(!year) throw createError(400, new Error('bad request: expected year'));
 
   this.id = uuidv4();
   this.make = make;

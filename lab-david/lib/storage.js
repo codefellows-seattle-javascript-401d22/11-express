@@ -29,7 +29,12 @@ exports.fetchItem = function(schemaName, id){
       } catch(err) {
         return Promise.reject(err);
       }
-    }).catch(err => Promise.reject(err));
+    }).catch(err => {
+      if(err.code === 'ENOENT'){
+        err = createError(404, new Error('route not found'));
+      }
+      return Promise.reject(err);
+    });
 };
 
 exports.deleteItem = function(schemaName, id){

@@ -12,14 +12,7 @@ describe('Car Routes', () => {
       request.post('localhost:3000/api/car').send({
       }).end((err,res) => {
         expect(res.status).toEqual(400);
-        expect(res.text).toEqual('bad request');
-        done();
-      });
-    });
-    it('should throw a JSON.parse error', (done) => {
-      request.post('localhost:3000/api/car').send(
-        ['make', 'model']).end((err,res) => {
-        expect(res.status).toEqual(400);
+        expect(res.text).toEqual('bad request: expected make');
         done();
       });
     });
@@ -42,14 +35,14 @@ describe('Car Routes', () => {
 
   describe('GET: /api/car', () => {
     it('should respond 404: route not found', (done) => {
-      request.get('localhost:3000/api/car/8').end((err, res) => {
+      request.get('localhost:3000/api/car/id/8').end((err, res) => {
         expect(res.status).toEqual(404);
         expect(res.text).toEqual('route not found');
         done();
       });
     });
     // it('should respond 400: bad request', (done) => {
-    //   request.get('localhost:3000/api/car/').end((err,res) => {
+    //   request.get('localhost:3000/api/car/id/').end((err,res) => {
     //     expect(res.status).toEqual(400);
     //     expect(res.text).toEqual('bad request');
     //     done();
@@ -64,7 +57,7 @@ describe('Car Routes', () => {
       });
     });
     it('should return a car', (done) => {
-      request.get(`localhost:3000/api/car/${car.id}`).end((err,res) => {
+      request.get(`localhost:3000/api/car/id/${car.id}`).end((err,res) => {
         expect(err).toBe(null);
         expect(res.status).toEqual(200);
         expect(car.make).toEqual('test make');
