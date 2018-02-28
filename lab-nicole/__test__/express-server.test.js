@@ -1,6 +1,7 @@
 'use strict';
 require('jest');
 const superagent = require('superagent');
+require('./server.js');
 
 describe('Response Codes', function () {
   describe('GET: /api/plant', function() {

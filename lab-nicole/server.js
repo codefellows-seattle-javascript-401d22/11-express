@@ -12,11 +12,6 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', (req, res) => {
-  debug('GET: /test');
-  res.json({ msg: 'hello from /test'});
-});
-
 app.post('/api/plant', jsonParser, (req, res, next) => {
   debug('POST: /api/plant');
 
@@ -55,8 +50,7 @@ app.use((err, req, res, next) => {
   }
 
   err = createError(500, err.message);
-  return next(res.status(err.status).send(err.name));
-  // ??? why next
+  return res.status(err.status).send(err.name);
 });
 
 app.listen(3000, () => {
