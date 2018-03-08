@@ -53,4 +53,20 @@ describe('Response Codes', function () {
         });
     });
   });
+  
+  describe('Invalid usage', function() {
+    it('should respond with a 404 for routes that are not registered', done => {
+      superagent.get('localhost:3000/api/woohoo')
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          done();
+        });
+      superagent.post('localhost:3000/api/huh')
+        .send({ species: 'aloe', color: 'green', flower: false })
+        .end((err, res) => {
+          expect(res.status).toEqual(404);
+          done();
+        });
+    });
+  });
 });

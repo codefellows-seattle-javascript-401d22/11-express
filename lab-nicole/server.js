@@ -32,10 +32,6 @@ app.get('/api/plant/', (req, res, next) => {
   next(createError(400, 'bad request'));
 });
 
-app.get('/api/:random', (req, res, next) => {
-  next(createError(404, 'not found'));
-});
-
 app.delete('/api/plant/:plantId', (req, res, next) => {
   debug('DELETE: /api/plant/:plantId');
 
@@ -55,6 +51,11 @@ app.use((err, req, res, next) => {
 
   err = createError(500, err.message);
   return next(res.status(err.status).send(err.name));
+});
+
+
+app.all('*', (req, res, next) => {
+  next(createError(404, 'not found'));
 });
 
 app.listen(3000, () => {
