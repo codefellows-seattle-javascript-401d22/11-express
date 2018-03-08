@@ -1,12 +1,12 @@
 'use strict';
 require('jest');
 const superagent = require('superagent');
-require('./server.js');
+require('../server.js');
 
 describe('Response Codes', function () {
   describe('GET: /api/plant', function() {
     it('should respond with a 404 not found for valid request w/ an id that is not found', function(done) {
-      superagent.get('localhost:3000/api/plant/21930809123')
+      superagent.get('localhost:3000/api/plant/123456')
         .end((err, res) => {
           expect(res.status).toEqual(404);
           expect(res.text).toEqual('not found');
@@ -30,6 +30,7 @@ describe('Response Codes', function () {
         });
     });
   });
+
   describe('POST: /api/plant', function() {
     it('should respond with a 400 bad request when no request body is provided', function(done) {
       superagent.post('localhost:3000/api/plant')
