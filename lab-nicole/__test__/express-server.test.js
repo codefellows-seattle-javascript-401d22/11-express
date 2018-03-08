@@ -22,10 +22,10 @@ describe('Response Codes', function () {
         });
     });
     it('should respond with a 200 when a valid request is made', function(done) {
-      superagent.get('localhost:3000/api/plant/2e82b67b-1c75-4ea3-b102-6980686ec426')
+      superagent.get('localhost:3000/api/plant/631e5cc4-f664-4f09-9613-6d02f7d0c184')
         .end((err, res) => {
           expect(res.status).toEqual(200);
-          expect(res.body).toEqual({'id':'2e82b67b-1c75-4ea3-b102-6980686ec426','species':'aloe','color':'green','flower':false});
+          expect(res.body).toEqual({'id':'631e5cc4-f664-4f09-9613-6d02f7d0c184','species':'aloe','color':'green','flower':false});
           done();
         });
     });
