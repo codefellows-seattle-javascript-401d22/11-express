@@ -12,31 +12,31 @@ exports.createItem = function(schemaName, item) {
 
   let json = JSON.stringify(item);
   return fs.writeFileProm(`${__dirname}/../data/${schemaName}/${item.id}.json`, json)
-  .then( () => item)
-  .catch( err => Promise.reject(err));
-}
+    .then( () => item)
+    .catch( err => Promise.reject(err));
+};
 
 exports.fetchItem = function(schemaName, id) {
   if (!schemaName) return Promise.reject(createError(400, 'expected schema name'));
   if (!id) return Promise.reject(createError(400, 'expected id'));
 
   return fs.readFileProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .then( data => {
-    try {
-      let item = JSON.parse(data.toString());
-      return item;
-    } catch (err) {
-      return Promise.reject(createError(404,'not found'));
-    }
-  })
-  .catch( err => Promise.reject(createError(404, 'not found')));
-}
+    .then( data => {
+      try {
+        let item = JSON.parse(data.toString());
+        return item;
+      } catch (err) {
+        return Promise.reject(createError(404,'not found'));
+      }
+    })
+    .catch( err => Promise.reject(createError(404, err)));
+};
 
 exports.deleteItem = function(schemaName, id) {
   if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
   if (!id) return Promise.reject(createError(400, 'expected item'));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  .then( () => createError(204, 'item not found'))
-  .catch( err => Promise.reject(err))
-}
+    .then( () => createError(204, 'item not found'))
+    .catch( err => Promise.reject(err));
+};
