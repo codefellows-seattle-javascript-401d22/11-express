@@ -26,10 +26,10 @@ exports.fetchItem = function(schemaName, id) {
       let item = JSON.parse(data.toString());
       return item;
     } catch (err) {
-      return Promise.reject(err);
+      return Promise.reject(createError(404,'not found'));
     }
   })
-  .catch( err => Promise.reject(err));
+  .catch( err => Promise.reject(createError(404, 'not found')));
 }
 
 exports.deleteItem = function(schemaName, id) {
@@ -37,5 +37,6 @@ exports.deleteItem = function(schemaName, id) {
   if (!id) return Promise.reject(createError(400, 'expected item'));
 
   return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
-  
+  .then( () => createError(204, 'item not found'))
+  .catch( err => Promise.reject(err))
 }

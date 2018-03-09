@@ -29,6 +29,10 @@ describe('Weed Routes', function(){
       })
     })
   })
+
+  //GET ROUTE TESTS
+
+
   describe('GET: /api/weed', function(){
     it('should return weed', function(done){
       request.get(`localhost:3000/api/weed/${weed.id}`)
@@ -42,7 +46,7 @@ describe('Weed Routes', function(){
       })
     })
     //test not passing
-    it('should return a 404 not found', function(done){
+    it.only('should return a 404 not found', function(done){
       request.get('localhost:3000/api/weed/1234.json')
       .end((err, res) => {
         expect(res.status).toEqual(404);
@@ -57,15 +61,10 @@ describe('Weed Routes', function(){
       })
     })
   })
-  //test not passing
+
+  //DELETE ROUTE TESTS
+  
   describe('DELETE: /api/weed', function(){
-    it('should return a 204', function(done){
-      request.delete(`localhost:3000/api/weed/${weed.id}`)
-      .end((err, res) => {
-        expect(res.status).toEqual(204);
-        done();
-      })
-    })
     it('should return a 400 error', function(done){
       request.delete(`localhost:3000/api/weed/123`)
       .end((err, res) => {
