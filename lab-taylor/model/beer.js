@@ -1,7 +1,6 @@
 'use strict';
 
 const uuid = require('uuid/v4');
-const createError = require('http-errors');
 const debug = require('debug')('beer:beer');
 const storage = require('../lib/storage.js');
 
@@ -33,6 +32,7 @@ Beer.fetchBeer = function(id) {
 
 Beer.deleteBeer = function(id) {
   debug('deleteBeer');
+  
   try {
     return storage.deleteItem('beer', id);
   } catch (err) {

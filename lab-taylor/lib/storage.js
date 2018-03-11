@@ -9,6 +9,7 @@ module.exports = exports = {};
 
 exports.createItem = function(schemaName, item) {
   debug('createItem');
+
   if(!schemaName) return Promise.reject(createError(400,'expected schema name'));
   if(!item) return Promise.reject(createError(400, 'expected item'));
 
@@ -20,6 +21,7 @@ exports.createItem = function(schemaName, item) {
 
 exports.fetchItem = function( schemaName, id) {
   debug('fetchItem');
+
   if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
   if(!id) return Promise.reject(createError(400, 'expected item'));
 
@@ -37,12 +39,17 @@ exports.fetchItem = function( schemaName, id) {
 
 exports.deleteItem = function(schemaName, id) {
   debug('deleteItem');
-  return new Promise((resolve,reject) => {
-    if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
-    if(!id) return Promise.reject(createError(400, 'expected id'));
 
-    fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`);
+  if(!schemaName) return Promise.reject(createError(400, 'expected schema name'));
+  if(!id) return Promise.reject(createError(400, 'expected id'));
+  
+  return fs.unlinkProm(`${__dirname}/../data/${schemaName}/${id}.json`)
+    .then( () => id)
+    .catch( err => Promise.reject(err));
     
-    resolve();
-  });
+  
 };
+
+    
+    
+  

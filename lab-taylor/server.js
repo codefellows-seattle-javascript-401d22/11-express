@@ -12,13 +12,15 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.get('/test', function(req,res) {
+app.get('/test', function(req, res) {
   debug('GET: /test');
+
   res.json({msg: 'hello from /test'});
 });
 
 app.post('/api/beer', jsonParser, function(req, res, next) {
   debug('POST: /api/beer');
+
   if(!req.body.name || !req.body.style){
     return next(createError(400, new Error('bad request')));
   }
@@ -27,27 +29,32 @@ app.post('/api/beer', jsonParser, function(req, res, next) {
     .catch( err => next(err));
 });
 
-app.get('/api/beer', function(req,res,next) {
+app.get('/api/beer', function(req, res, next) {
   return next(createError(400, new Error('bad request')));
 });
   
 
-app.get('/api/beer/:beerId', function(req,res, next) {
+app.get('/api/beer/:beerId', function(req, res, next) {
   debug('GET: /api/beer/beerId');
+
   Beer.fetchBeer(req.params.beerId)
     .then( beer => res.json(beer))
     .catch( err => next(err));
 });
 
-app.delete('/api/beer/:beerId', function(req,res,next) {
+app.delete('/api/beer/:beerId', function(req, res, next) {
   debug('DELETE: /api/beer/beerId');
+  
+  if(!req.params.beerId) return next(createError(400, 'Bad Request'));
+
   Beer.deleteBeer(req.params.beerId)
-    .then( () => res.status(204)).send('deleted')
+    .then( () => res.sendStatus(204))
     .catch( err => next(err));
 });
 
 app.use(function(err, req, res, next) {
   debug('error module');
+
   console.error(err.message);
 
   if(err.status) {
@@ -75,3 +82,4 @@ app.listen(PORT, () => {
   
   
   
+
